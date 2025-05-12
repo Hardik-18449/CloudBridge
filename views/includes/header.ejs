@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+        }
+    
+        .nav-link:hover {
+            background-color: #0a509a; 
+            color: white !important;
+            border-radius: 5px;
+            padding: 5px 10px;
+            text-decoration: none;
+        }
+        .dropdown-item:hover {
+            background-color: #0a509a!important; 
+            color: white !important;
+            border-radius: 5%!important;
+            padding: 3.5% 5%!important;
+            text-decoration: none!important;
+            transition: all 0.2s ease-in-out !important;
+        }
+
+
+    </style>
+    
+<head>
+
+    
+    <title><%= typeof title == "undefined" ? "Home" : title %></title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+         <!-- Background Video -->
+<!-- Fullscreen Background Video with Dark Overlay -->
+<div class="position-fixed top-0 start-0 vw-100 vh-100" style="z-index: -1; overflow: hidden;">
+    <video autoplay muted loop playsinline class="w-100 h-100" style="object-fit: cover;">
+      <source src="/bgvideo.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <!-- Dark overlay to dim brightness -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.4); z-index: 1;"></div>
+
+
+    
+    <!-- Information Text -->
+   
+    </div>
+    <%if(request.url === "/"){%>
+        <div class="position-absolute top-50 start-50 translate-middle text-center text-white" style="z-index: 2;">
+            <h1 class="fw-bold display-4">CloudBridge</h1>
+            <p class="lead mb-4">A secure and easy-to-use file sharing system to send and receive files </p>
+
+  </div>
+  
+  <%}%>
+
+    <input type="hidden" id="base-url" value="<%= request.mainURL %>"/>
+
+    <script>
+        var months = ["January", "February", "March", "April", "May", "June", "July", 
+                      "August", "September", "October", "November", "December"];
+    </script>
+    <% 
+    months = ["January", "February", "March", "April", "May", "June", "July", 
+              "August", "September", "October", "November", "December"];
+
+              formatBytes = function(bytes , decimals = 2){
+                if(bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const dm = decimals < 0 ? 0 : decimals;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB','EB','ZB','YB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return `${parseFloat(bytes / Math.pow(k, i)).toFixed(dm)} ${sizes[i]}`
+                };
+
+                getFolderSize = function(arr){
+                    var sum = 0;
+                    for (var a = 0; a<arr.length;a++){
+                        if (arr[a].type == "file"){
+                            if (arr[a].files.length = 0){
+                                sum += getFolderSize(arr[a].files);
+
+                            }
+                        }else{
+                            sum += arr[a].size;
+                        }
+                    }
+                    return sum;
+                };
+                %>
+              
+   
+
+    <!-- ✅ Container added inside navbar for proper spacing -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light " >
+        <div class="container" style="display: flex; justify-content: space-between;">
+            <a class="navbar-brand me-4 fw-medium display-2"  style="cursor:none;"  href="<%= request.mainURL %>/">Cloud Bridge</a>
+            <div class="collapse navbar-collapse" id="navbarSupportConent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<%= request.mainURL %>/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= request.mainURL %>/my-uploads">MyUploads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%= request.mainURL %>/shared-with-me">Share with Me</a>
+                    </li>
+
+                    <% if (request.isLogin) { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-uppercase" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false" >
+                                <%= request.session.user.name %>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="<%= request.mainURL %>/logout" style="font-size: 0.85rem; padding: 6px 12px;">Log Out</a>
+                            </ul>
+                        </li>
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.mainURL %>/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<%= request.mainURL %>/register">Register</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div> <!-- /container -->
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+</body>
+</html>
